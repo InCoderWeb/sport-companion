@@ -9,7 +9,7 @@ export default function ContactPage() {
             </div>
             <div className="mx-auto max-w-2xl text-center">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Contact Us</h2>
-                <p className="mt-2 text-lg leading-8 text-gray-400">Let's Chat! We're Here to Help.</p>
+                <p className="mt-2 text-lg leading-8 text-gray-400">Let&apos;s Chat! We&apos;re Here to Help.</p>
             </div>
             <form action="#" method="POST" className="mx-auto max-w-xl sm:mt-10">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -40,7 +40,7 @@ export default function ContactPage() {
 
                 </div>
                 <div className="mt-10">
-                    <button type="submit" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Let's talk</button>
+                    <button type="submit" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Let&apos;s talk</button>
                 </div>
             </form>
         </div>
