@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import { Button } from "./ui/button";
+import { UserButton } from "@clerk/nextjs";
 
 const MapComponent = () => {
 	const [hasLocationPermission, setHasLocationPermission] = useState("");
@@ -49,38 +50,31 @@ const MapComponent = () => {
 		} else {
 			console.log("Geolocation is not supported by this browser.");
 		}
-	}, []);
+	}, [hasLocationPermission, cords.lat, cords.lng]);
 
 	const customMarkerIcon = new Icon({
 		iconUrl: "/images/marker.png",
 		iconSize: [38, 38],
 	});
-
-	const handleRequestLocation = () => {
-		navigator.geolocation.getCurrentPosition(success, errors, options);
-	};
 	return (
 		<>
 			{hasLocationPermission !== "granted" && (
 				<>
-					<div className="fixed w-screen h-screen z-[9999] bg-black/40 flex justify-center items-center flex-col">
+					<div className="fixed w-screen h-screen z-[9999] backdrop-blur-sm bg-black/40 flex justify-center items-center flex-col">
 						<div className="bg-white p-4 rounded-xl max-w-[24rem] flex justify-center items-center flex-col mx-4 text-center">
 							<img src="/images/marker.png" alt="location Icon" />
 							<p className="mb-4">
 								This application requires your location. Please
 								allow access to proceed.
 							</p>
-							<Button
-								className="w-full bg-purple-700"
-								onClick={handleRequestLocation}
-							>
-								Allow Location
-							</Button>
 						</div>
 					</div>
 				</>
 			)}
-
+			
+			<div className="fixed right-6 top-6 z-[9999] bg-white size-[2.5rem] flex justify-center items-center rounded-full shadow-2xl">
+				<UserButton/>
+			</div>
 			<MapContainer center={[cords.lat, cords.lng]} zoom={6}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
