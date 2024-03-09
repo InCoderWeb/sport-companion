@@ -1,7 +1,11 @@
+"use client";
 import React from 'react'
 import Link from 'next/link'
+import { UserButton, useAuth } from "@clerk/nextjs";
 
 export default function LandingPage() {
+    const { isLoaded, userId, sessionId, getToken } = useAuth();
+    console.log(userId);
     return (
         <div>
             <div className="fixed top-0 left-0 w-full h-full" style={{backgroundImage: `url(/images/leah-hetteberg-Q-Qd44h6DZU-unsplash.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center'}}></div>
@@ -11,12 +15,21 @@ export default function LandingPage() {
                     <div className="flex lg:flex-1">
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">Your Company</span>
-                            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
                         </a>
                     </div>
                     
                     <div className="lg:flex lg:flex-1 lg:justify-end">
-                        <a href="#" className="text-lg font-semibold leading-6 text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+                        {
+                            userId != undefined && userId != null ? (
+                                <>
+                                    <UserButton/>
+                                </>
+                            ) : (
+                                <>
+                                    <a href="/sign-in" className="text-lg font-semibold leading-6 text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+                                </>
+                            )
+                        }
                     </div>
                 </nav>
             </header>

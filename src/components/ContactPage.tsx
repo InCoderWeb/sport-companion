@@ -1,6 +1,5 @@
 import React from 'react'
-
-export default function ContactPage() {
+export default function ContactPage() {   
     return (
         <div className="isolate px-6 py-24 sm:py-32 lg:px-8">
             <div className="fixed top-0 left-0 w-full h-full" style={{backgroundImage: `url(/images/aksh-yadav-bY4cqxp7vos-unsplash.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', zIndex: '-1'}}></div>
