@@ -10,8 +10,8 @@ const MapComponent = () => {
 	const [hasLocationPermission, setHasLocationPermission] = useState("");
 
 	const [cords, setCords] = useState({
-		lat: 20.5937,
-		lng: 78.9629,
+		lat: 0,
+		lng: 0,
 	});
 
 	const options = {
@@ -30,7 +30,7 @@ const MapComponent = () => {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 
-	useEffect(() => {
+	const getLocation = () => {
 		if (navigator.geolocation) {
 			navigator.permissions
 				.query({ name: "geolocation" })
@@ -38,18 +38,23 @@ const MapComponent = () => {
 					if (result.state === "granted") {
 						setHasLocationPermission(result.state);
 					} else if (result.state === "prompt") {
-						//If prompt then the user will be asked to give permission
 						setHasLocationPermission(result.state);
-						navigator.geolocation.getCurrentPosition(
-							success,
-							errors,
-							options
-						);
 					}
+					navigator.geolocation.getCurrentPosition(
+						success,
+						errors,
+						options
+					);
 				});
 		} else {
 			console.log("Geolocation is not supported by this browser.");
 		}
+	};
+
+	useEffect(() => {
+		setInterval(() => {
+			getLocation();
+		},  1000);
 	}, [hasLocationPermission, cords.lat, cords.lng]);
 
 	const customMarkerIcon = new Icon({
@@ -71,9 +76,9 @@ const MapComponent = () => {
 					</div>
 				</>
 			)}
-			
+
 			<div className="fixed right-6 top-6 z-[9999] bg-white size-[2.5rem] flex justify-center items-center rounded-full shadow-2xl">
-				<UserButton/>
+				<UserButton />
 			</div>
 			<MapContainer center={[cords.lat, cords.lng]} zoom={6}>
 				<TileLayer
