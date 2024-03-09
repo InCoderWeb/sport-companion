@@ -5,7 +5,7 @@ import { UserButton, useAuth } from "@clerk/nextjs";
 
 export default function LandingPage() {
     const { isLoaded, userId, sessionId, getToken } = useAuth();
-    console.log(userId);
+    
     return (
         <div>
             <div className="fixed top-0 left-0 w-full h-full" style={{backgroundImage: `url(/images/leah-hetteberg-Q-Qd44h6DZU-unsplash.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center'}}></div>
@@ -43,7 +43,7 @@ export default function LandingPage() {
                         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">Sport Companion</h1>
                         <p className="mt-6 text-lg leading-8 text-gray-300">Sweat Together, Not Solo. Find Your Sports Community.</p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <a href="#" className="rounded-md bg-indigo-600 px-16 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
+                            <Link href="/dashboard" className="rounded-md bg-indigo-600 px-16 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</Link>
                             <Link href='/contact' className="text-lg font-semibold leading-6 text-white">Contact Us <span aria-hidden="true">→</span></Link>
                         </div>
                     </div>
