@@ -87,3 +87,7 @@
 .leaflet-container{
   @apply !h-screen
 }
+
+.currentLocation{
+  @apply fixed right-6 bottom-8 text-black z-[9999] hover:bg-blue-700 hover:text-white bg-white size-[3rem] flex justify-center items-center rounded-full shadow-2xl text-2xl !p-0 cursor-pointer
+}

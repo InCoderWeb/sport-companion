@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
+import { Circle, MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import { Button } from "./ui/button";
 import { UserButton } from "@clerk/nextjs";
@@ -54,13 +54,14 @@ const MapComponent = () => {
 	useEffect(() => {
 		setInterval(() => {
 			getLocation();
-		},  1000);
+		}, 1000);
 	}, [hasLocationPermission, cords.lat, cords.lng]);
 
 	const customMarkerIcon = new Icon({
 		iconUrl: "/images/marker.png",
 		iconSize: [38, 38],
 	});
+
 	return (
 		<>
 			{hasLocationPermission !== "granted" && (
@@ -78,18 +79,28 @@ const MapComponent = () => {
 			)}
 
 			<div className="fixed right-6 top-6 z-[9999] bg-white size-[2.5rem] flex justify-center items-center rounded-full shadow-2xl">
-				<UserButton />
+				<UserButton afterSignOutUrl="/" />
 			</div>
-			<MapContainer center={[cords.lat, cords.lng]} zoom={6}>
-				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
-				<Marker
-					position={[cords.lat, cords.lng]}
-					icon={customMarkerIcon}
-				/>
-			</MapContainer>
+			{cords.lat != 0 && cords.lng != 0 && (
+				<>
+					<MapContainer center={[cords.lat, cords.lng]} zoom={6}>
+						<TileLayer
+							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						/>
+						<Marker
+							position={[cords.lat, cords.lng]}
+							icon={customMarkerIcon}
+						/>
+						<Circle
+							center={[cords.lat, cords.lng]}
+							pathOptions={{ fillColor: "red" }}
+							radius={100}
+							stroke={false}
+						/>
+					</MapContainer>
+				</>
+			)}
 		</>
 	);
 };
