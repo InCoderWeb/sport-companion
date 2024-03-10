@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { UserButton, useAuth } from "@clerk/nextjs";
 
 export default function LandingPage() {
-    const { isLoaded, userId, sessionId, getToken } = useAuth();
+    const { userId } = useAuth();
+    console.log(userId);
     
     return (
         <div>

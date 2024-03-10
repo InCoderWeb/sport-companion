@@ -9,6 +9,7 @@ import axios from "axios";
 const MapComponent = () => {
 	const { userId } = useAuth();
 	const [hasLocationPermission, setHasLocationPermission] = useState("");
+	const [isSet, setIsSet] = useState(0);
 
 	const [cords, setCords] = useState({
 		lat: 0,
@@ -25,6 +26,7 @@ const MapComponent = () => {
 		var crd = pos.coords;
 		setHasLocationPermission("granted");
 		setCords({ lat: crd.latitude, lng: crd.longitude });
+		setIsSet(1)
 	}
 
 	function errors(err: any) {
@@ -46,14 +48,16 @@ const MapComponent = () => {
 						errors,
 						options
 					);
-					const response = await axios.post("/api/userLocation", {
-						userId,
-						lat: cords.lat,
-						lng: cords.lng,
-						updatedAt: new Date(Date.now()).toISOString(),
-					})
-					if(response.data.status){
-						console.log(response.data);						
+					if (isSet == 1) {
+						const response = await axios.post("/api/userLocation", {
+							userId,
+							lat: cords.lat,
+							lng: cords.lng,
+							updatedAt: new Date(Date.now()).toISOString(),
+						});
+						if (response.data.status) {
+							console.log(response.data);
+						}
 					}
 				});
 		} else {
@@ -91,7 +95,11 @@ const MapComponent = () => {
 			</div>
 			{cords.lat != 0 && cords.lng != 0 && (
 				<>
-					<MapContainer className="w-full col-span-9" center={[cords.lat, cords.lng]} zoom={6}>
+					<MapContainer
+						className="w-full col-span-9"
+						center={[cords.lat, cords.lng]}
+						zoom={6}
+					>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
