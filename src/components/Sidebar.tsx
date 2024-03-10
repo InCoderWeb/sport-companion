@@ -10,11 +10,6 @@ import { Button } from "./ui/button";
 import { LuAlignJustify } from "react-icons/lu";
 
 const Sidebar = () => {
-	const [toggle, setToggle] = useState(false);
-
-	const handleToggle = () => {
-		setToggle(!toggle);
-	};
 	return (
 		<Sheet>
 			<SheetTrigger className="fixed top-6 left-6 z-[999999]">
