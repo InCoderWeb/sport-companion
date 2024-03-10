@@ -12,15 +12,6 @@ import { LuAlignJustify } from "react-icons/lu";
 const Sidebar = () => {
 	const [toggle, setToggle] = useState(false);
 
-	const getUsers = async () => {
-		const users = await clerkClient.users.getUserList();
-		console.log(users);
-	};
-
-	useEffect(() => {
-		getUsers();
-	}, []);
-
 	const handleToggle = () => {
 		setToggle(!toggle);
 	};
