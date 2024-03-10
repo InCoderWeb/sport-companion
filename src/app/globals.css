@@ -91,3 +91,7 @@
 .currentLocation{
   @apply fixed right-6 bottom-8 text-black z-[9999] hover:bg-blue-700 hover:text-white bg-white size-[3rem] flex justify-center items-center rounded-full shadow-2xl text-2xl !p-0 cursor-pointer
 }
+
+.userCard{
+  @apply p-4 hover:bg-blue-100 border hover:border-blue-100 transition-all hover:text-white max-w-xs mx-auto bg-white rounded-xl space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6
+}

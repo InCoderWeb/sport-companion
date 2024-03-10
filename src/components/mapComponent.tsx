@@ -113,7 +113,7 @@ const MapComponent = () => {
 			)}
 
 			<div className="fixed right-6 top-6 z-[9999] bg-white size-[2.5rem] flex justify-center items-center rounded-full shadow-2xl">
-				<UserButton afterSignOutUrl="/" />
+				<UserButton afterSignOutUrl="/" userProfileUrl="/profile" />
 			</div>
 			{cords.lat != 0 && cords.lng != 0 && (
 				<>
@@ -121,6 +121,7 @@ const MapComponent = () => {
 						className="w-full col-span-9"
 						center={[cords.lat, cords.lng]}
 						zoom={6}
+						zoomControl={false}
 					>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -130,17 +131,19 @@ const MapComponent = () => {
 							isSet == 1 && allUser != undefined ? (
 								allUser.map((d:any, i:any) => {
 									return (
-										<Marker key={i} icon={customMarkerIcon} position={[d.lat, d.lng]} ></Marker>
+										<>
+											<Marker key={i} icon={customMarkerIcon} position={[d.lat, d.lng]} ></Marker>
+											<Circle
+												center={[d.lat, d.lng]}
+												pathOptions={{ fillColor: "red" }}
+												radius={100}
+												stroke={false}
+											/>
+										</>
 									)
 								})
 							) : null
 						}
-						<Circle
-							center={[cords.lat, cords.lng]}
-							pathOptions={{ fillColor: "red" }}
-							radius={100}
-							stroke={false}
-						/>
 					</MapContainer>
 				</>
 			)}
