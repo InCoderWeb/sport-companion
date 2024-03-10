@@ -10,6 +10,7 @@ const MapComponent = () => {
 	const { userId } = useAuth();
 	const [hasLocationPermission, setHasLocationPermission] = useState("");
 	const [isSet, setIsSet] = useState(0);
+	const [allUser, setAllUser] = useState<any>();
 
 	const [cords, setCords] = useState({
 		lat: 0,
@@ -26,7 +27,8 @@ const MapComponent = () => {
 		var crd = pos.coords;
 		setHasLocationPermission("granted");
 		setCords({ lat: crd.latitude, lng: crd.longitude });
-		setIsSet(1)
+		setIsSet(1);
+		fetchData();
 	}
 
 	function errors(err: any) {
@@ -53,15 +55,33 @@ const MapComponent = () => {
 							userId,
 							lat: cords.lat,
 							lng: cords.lng,
+							requestType: "post",
 							updatedAt: new Date(Date.now()).toISOString(),
 						});
 						if (response.data.status) {
-							console.log(response.data);
+							// console.log(response.data);
 						}
 					}
 				});
 		} else {
 			console.log("Geolocation is not supported by this browser.");
+		}
+	};
+
+	const fetchData = async () => {
+		const data = {
+			requestType: "get",
+		};
+		try {
+			const response = await axios.post("/api/userLocation", data);
+			if (response.data.status) {
+				console.log(response.data.usersLocation);
+				setAllUser(response.data.usersLocation);
+			}
+		} catch (error: any) {
+			if (!error.response.data.status) {
+				console.error(error.response.data.message);
+			}
 		}
 	};
 
@@ -73,6 +93,8 @@ const MapComponent = () => {
 		iconUrl: "/images/marker.png",
 		iconSize: [38, 38],
 	});
+	
+	console.log(allUser);
 
 	return (
 		<>
@@ -104,10 +126,15 @@ const MapComponent = () => {
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 						/>
-						<Marker
-							position={[cords.lat, cords.lng]}
-							icon={customMarkerIcon}
-						/>
+						{
+							isSet == 1 && allUser != undefined ? (
+								allUser.map((d:any, i:any) => {
+									return (
+										<Marker key={i} icon={customMarkerIcon} position={[d.lat, d.lng]} ></Marker>
+									)
+								})
+							) : null
+						}
 						<Circle
 							center={[cords.lat, cords.lng]}
 							pathOptions={{ fillColor: "red" }}
